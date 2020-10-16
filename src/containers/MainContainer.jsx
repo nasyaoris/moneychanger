@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Button, Form, InputNumber, Typography } from 'antd';
 import MonetizationOnTwoToneIcon from '@material-ui/icons/MonetizationOnTwoTone';
 import { 
@@ -8,7 +9,6 @@ import './mainContainer.css'
 import CurrencyItemCard from './CurrencyItemCard'
 
 const { Title } = Typography;
-
 
 function MainContainer({ rates, myrates, setMyRates }) {
 
@@ -53,24 +53,24 @@ function MainContainer({ rates, myrates, setMyRates }) {
   }
 
   const handleCurrencyItemRemove = (index) => {
-    const newResourceItems = myrates.allrates.filter((item, idx) => {
+    const newCurrencies = myrates.allrates.filter((item, idx) => {
         return (index !== idx)
     });
     
     setMyRates({
       amount: myrates.amount,
-      allrates: newResourceItems
+      allrates: newCurrencies
     });
   }
 
-  const handleAddResourceItem = () => {
-    const newResourceItem = {
+  const handleAddCurrencyItem = () => {
+    const newCurrencies = {
         name: `IDR`,
         convertedAmount: formatter(rates['IDR']*myrates.amount)
     }; 
     setMyRates({
       amount: myrates.amount,
-      allrates: [...myrates.allrates, newResourceItem]
+      allrates: [...myrates.allrates, newCurrencies]
     });
   }
 
@@ -91,13 +91,12 @@ function MainContainer({ rates, myrates, setMyRates }) {
           {myrates.allrates.map((item, index) => {
             return (
               <CurrencyItemCard 
-                        key={index}
-                        rates={rates}
-                        allRates={myrates.allrates}
-                        baseAmount={myrates.amount}
-                        item={item}
-                        index={index}
-                        handleCurrencyItemChange={handleCurrencyItemChange} 
+                  key={index}
+                  rates={rates}
+                  baseAmount={myrates.amount}
+                  item={item}
+                  index={index}
+                  handleCurrencyItemChange={handleCurrencyItemChange} 
               />
             );
           })}
@@ -109,7 +108,7 @@ function MainContainer({ rates, myrates, setMyRates }) {
                   <Button
                     style={{ height: '60px', marginTop: '1rem',boxShadow: '4px 8px 10px'}}
                     type="dashed"
-                    onClick={handleAddResourceItem}
+                    onClick={handleAddCurrencyItem}
                     block
                   >
                     <PlusOutlined /> Add new currency
@@ -121,6 +120,12 @@ function MainContainer({ rates, myrates, setMyRates }) {
         </table>
     </div>
   );
+}
+
+MainContainer.propTypes = {
+  myrates: PropTypes.shape({}).isRequired,
+  rates: PropTypes.shape({}).isRequired,
+  setMyRates: PropTypes.func.isRequired,
 }
 
 export default MainContainer;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Select, Typography, Button, Tooltip } from 'antd';
 import { 
   DeleteOutlined,
@@ -15,7 +16,6 @@ function CurrencyItemCard({
   baseAmount,
   handleCurrencyItemChange,
   index,
-  allRates 
 }) {
 
   const formatter = (number) => {
@@ -59,6 +59,14 @@ function CurrencyItemCard({
         </td>
     </tr>
   );
+}
+
+CurrencyItemCard.propTypes = {
+  rates: PropTypes.shape({}).isRequired,
+  item: PropTypes.shape({}).isRequired,
+  baseAmount: PropTypes.number.isRequired,
+  handleCurrentItemChange: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired
 }
 
 export default CurrencyItemCard;
