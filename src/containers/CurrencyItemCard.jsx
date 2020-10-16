@@ -5,6 +5,7 @@ import {
 } from '@ant-design/icons';
 
 import './currencyItemCard.css';
+
 const { Title } = Typography;
 const { Option } = Select;
 

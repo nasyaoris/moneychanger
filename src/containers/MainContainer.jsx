@@ -44,7 +44,7 @@ function MainContainer({ rates, myrates, setMyRates }) {
     
     let copy = myrates.allrates
     copy[index] = newItem
-    console.log(copy)
+
     setMyRates({
       ...myrates,
         allrates: copy

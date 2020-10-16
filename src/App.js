@@ -44,26 +44,6 @@ function App() {
         });
     };
 
-    // const handleSave = async () => {
-    //   setGlobal({
-    //     loading: true,
-    //     config: global.config,
-    //     dictionary: global.dictionary,
-    //     feature: global.feature
-    //   });
-
-    //   try {
-    //     const result = await axios.post(initialData['serverURL'], {}, {data: global.config});
-    //     setGlobal({
-    //       loading: false,
-    //       config: global.config,
-    //       dictionary: global.dictionary,
-    //       feature: global.feature
-    //     });
-    //   } catch(e) {
-    //     alert(e);
-    //   }
-    // }
     return (
         <div className="App"  style={{ backgroundColor: 'lavender'}}>
                { global.loading ? <Spin /> : (

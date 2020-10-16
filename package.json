@@ -12,6 +12,7 @@
     "antd": "^4.7.0",
     "axios": "^0.20.0",
     "font-awesome": "^4.7.0",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3"
