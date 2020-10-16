@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form, InputNumber, Typography } from 'antd';
+import { Button, Form, InputNumber, Typography, Select, Tooltip } from 'antd';
 import MonetizationOnTwoToneIcon from '@material-ui/icons/MonetizationOnTwoTone';
 import { 
   PlusOutlined,
@@ -9,12 +9,16 @@ import './mainContainer.css'
 import CurrencyItemCard from './CurrencyItemCard'
 
 const { Title } = Typography;
+const { Option } = Select
 
 function MainContainer({ rates, myrates, setMyRates }) {
 
   const formatter = (number) => {
     return (number).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
   };
+
+  const [currency, setCurrency] = useState('IDR')
+  const [isNewCurrency, setIsNewCurrency] = useState(false)
 
   const handleSaveAmount = async (amount) => {
     let copy = myrates;
@@ -52,6 +56,10 @@ function MainContainer({ rates, myrates, setMyRates }) {
   
   }
 
+  const handleCurrencyTypeChange = (value) => {
+    setCurrency(value)
+  }
+
   const handleCurrencyItemRemove = (index) => {
     const newCurrencies = myrates.allrates.filter((item, idx) => {
         return (index !== idx)
@@ -63,16 +71,23 @@ function MainContainer({ rates, myrates, setMyRates }) {
     });
   }
 
-  const handleAddCurrencyItem = () => {
+  const handleAddCurrencyItem = async () => {
     const newCurrencies = {
-        name: `IDR`,
-        convertedAmount: formatter(rates['IDR']*myrates.amount)
+        name: currency,
+        convertedAmount: formatter(rates[currency]*myrates.amount)
     }; 
-    setMyRates({
+    await setMyRates({
       amount: myrates.amount,
       allrates: [...myrates.allrates, newCurrencies]
     });
+    setIsNewCurrency(false)
   }
+
+  const handleIsAddCurrency = () => {
+    setIsNewCurrency(true)
+  }
+
+  const currencies = Object.keys(rates)
 
   return (
     <div className="mainContainer" >
@@ -102,13 +117,41 @@ function MainContainer({ rates, myrates, setMyRates }) {
           })}
           </tbody>
           <tfoot style={{marginTop: '1rem'}}>
-            <tr>
-              <td colSpan={3}>
+            {
+              isNewCurrency &&
+              <tr>
+              <td colSpan={1}>
+                <Tooltip title="Pick Currency">
+                      <Select style={{width: '100%', boxShadow: '2px 2px 2px'}} onChange={handleCurrencyTypeChange} placeholder="Currency" value={currency} defaultValue='IDR'>
+                        {currencies.map((curr, idx) => {
+                            return (
+                                <Option key={idx} value={curr}>{curr}</Option>
+                            );
+                        })}
+                      </Select>
+                </Tooltip>
+              </td>
+              <td colSpan={2}>
                 <Form.Item>
                   <Button
-                    style={{ height: '60px', marginTop: '1rem',boxShadow: '4px 8px 10px'}}
+                    style={{ height: '30px', marginTop: '20px', boxShadow: '4px 4px 4px'}}
                     type="dashed"
                     onClick={handleAddCurrencyItem}
+                    block
+                  >
+                    <PlusOutlined /> Submit
+                  </Button>
+                </Form.Item>
+              </td>
+              </tr>
+            }
+            <tr>
+            <td colSpan={3}>
+                <Form.Item>
+                  <Button
+                    style={{ height: '60px', marginTop: '5px', boxShadow: '4px 8px 10px'}}
+                    type="dashed"
+                    onClick={handleIsAddCurrency}
                     block
                   >
                     <PlusOutlined /> Add new currency
