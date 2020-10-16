@@ -28,15 +28,6 @@ function CurrencyItemCard({
   return (
     <tr className="currencyItem" style={{border: 'solid 1px #dfdfdf', boxShadow: '4px 5px 15px'}}>
          <td valign="top" style={{ paddingTop: '20px' }}>
-         {/* <Tooltip title="Pick Currency">
-            <Select onChange={handleTypeChange} placeholder="Currency" value={item.name}>
-              {currencies.map((curr, idx) => {
-                  return (
-                      <Option key={idx} value={curr}>{curr}</Option>
-                  );
-              })}
-            </Select>
-          </Tooltip> */}
           <p style={{ fontSize: '1rem', fontWeight: 'bold'}}>{item.name}</p>
            <p style={{ fontSize: '12px', fontWeight: 'bold'}}>{item.name} - {currencyDict[item.name]}</p>
            <p style={{ fontSize: '12px'}}>1 USD = {formatter(rates[item.name])} {item.name}</p>

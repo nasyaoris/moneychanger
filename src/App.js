@@ -46,7 +46,7 @@ function App() {
 
     return (
         <div className="App"  style={{ backgroundColor: 'lavender'}}>
-               { global.loading ? <Spin /> : (
+          { global.loading ? <Spin /> : (
         <div>
           <MainContaianer rates={global.rates} myrates={global.myrates} setMyRates={setMyRates} />
         </div>
