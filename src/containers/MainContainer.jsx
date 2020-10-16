@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form, InputNumber, Typography, Select, Tooltip } from 'antd';
+import { Button, Form, InputNumber, Typography, Select } from 'antd';
 import MonetizationOnTwoToneIcon from '@material-ui/icons/MonetizationOnTwoTone';
 import { 
   PlusOutlined,
@@ -10,6 +10,19 @@ import CurrencyItemCard from './CurrencyItemCard'
 
 const { Title } = Typography;
 const { Option } = Select
+
+const currencyDict = {
+  USD: 'United States dollar',
+  CAD: 'Canadian dollar',
+  IDR: 'Indonesian rupiah',
+  GBP: 'British pound',
+  CHF: 'Swiss franc',
+  SGD: 'Singapore dollar',
+  INR: 'Indian rupee',
+  MYR: 'Malaysian ringgit',
+  JPY: 'Japanese yen',
+  KRW: 'South Korean won'
+}
 
 function MainContainer({ rates, myrates, setMyRates }) {
 
@@ -87,7 +100,7 @@ function MainContainer({ rates, myrates, setMyRates }) {
     setIsNewCurrency(true)
   }
 
-  const currencies = Object.keys(rates)
+  const currencies = Object.keys(currencyDict)
 
   return (
     <div className="mainContainer" >
@@ -111,6 +124,7 @@ function MainContainer({ rates, myrates, setMyRates }) {
                   baseAmount={myrates.amount}
                   item={item}
                   index={index}
+                  currencyDict={currencyDict}
                   handleCurrencyItemChange={handleCurrencyItemChange} 
               />
             );
@@ -121,15 +135,13 @@ function MainContainer({ rates, myrates, setMyRates }) {
               isNewCurrency &&
               <tr>
               <td colSpan={1}>
-                <Tooltip title="Pick Currency">
-                      <Select style={{width: '100%', boxShadow: '2px 2px 2px'}} onChange={handleCurrencyTypeChange} placeholder="Currency" value={currency} defaultValue='IDR'>
-                        {currencies.map((curr, idx) => {
-                            return (
-                                <Option key={idx} value={curr}>{curr}</Option>
-                            );
-                        })}
-                      </Select>
-                </Tooltip>
+                <Select style={{width: '100%', boxShadow: '2px 2px 2px'}} onChange={handleCurrencyTypeChange} placeholder="Currency" value={currency} defaultValue='IDR'>
+                    {currencies.map((curr, idx) => {
+                        return (
+                            <Option key={idx} value={curr}>{curr}</Option>
+                        );
+                    })}
+                </Select>
               </td>
               <td colSpan={2}>
                 <Form.Item>

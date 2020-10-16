@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Select, Typography, Button, Tooltip } from 'antd';
+import { Button, Tooltip } from 'antd';
 import { 
   DeleteOutlined,
 } from '@ant-design/icons';
 
 import './currencyItemCard.css';
 
-const { Title } = Typography;
-const { Option } = Select;
 
 function CurrencyItemCard({
   rates,
@@ -16,20 +14,12 @@ function CurrencyItemCard({
   baseAmount,
   handleCurrencyItemChange,
   index,
+  currencyDict
 }) {
 
   const formatter = (number) => {
     return (number).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
   };
-
-  const currencies = Object.keys(rates)
-
-  let handleTypeChange = (value) => {
-    let copy = Object.assign({}, item); 
-    copy.name = value;
-    copy.convertedAmount = formatter(rates[copy.name]*baseAmount);
-    handleCurrencyItemChange(index, copy);
-  }
 
   let handleRemove = async (e) => {
     await handleCurrencyItemChange(index, null)
@@ -38,7 +28,7 @@ function CurrencyItemCard({
   return (
     <tr className="currencyItem" style={{border: 'solid 1px #dfdfdf', boxShadow: '4px 5px 15px'}}>
          <td valign="top" style={{ paddingTop: '20px' }}>
-         <Tooltip title="Pick Currency">
+         {/* <Tooltip title="Pick Currency">
             <Select onChange={handleTypeChange} placeholder="Currency" value={item.name}>
               {currencies.map((curr, idx) => {
                   return (
@@ -46,11 +36,13 @@ function CurrencyItemCard({
                   );
               })}
             </Select>
-          </Tooltip>
+          </Tooltip> */}
+          <p style={{ fontSize: '1rem', fontWeight: 'bold'}}>{item.name}</p>
+           <p style={{ fontSize: '12px', fontWeight: 'bold'}}>{item.name} - {currencyDict[item.name]}</p>
            <p style={{ fontSize: '12px'}}>1 USD = {formatter(rates[item.name])} {item.name}</p>
           </td>
           <td valign="top" style={{ paddingTop: '20px', paddingLeft: '10px'}}>
-          <Title level={5}>{item.name} {item.convertedAmount}</Title>
+          <p style={{ fontSize: '16px', fontWeight: 'bold' }}> {item.convertedAmount}</p>
           </td>
         <td valign="center" style={{ padding: '10px'}}>
         <Tooltip title="remove">
@@ -66,7 +58,8 @@ CurrencyItemCard.propTypes = {
   item: PropTypes.shape({}).isRequired,
   baseAmount: PropTypes.number.isRequired,
   handleCurrentItemChange: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired
+  index: PropTypes.number.isRequired,
+  currencyDict: PropTypes.shape({}).isRequired
 }
 
 export default CurrencyItemCard;
