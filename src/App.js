@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Spin } from 'antd';
 import axios from "axios";
 import "./App.css";
-import Config from './containers/MainContainer';
+import MainContaianer from './containers/MainContainer';
 
 function App() {
     const [global, setGlobal] = useState({
@@ -48,7 +48,7 @@ function App() {
         <div className="App"  style={{ backgroundColor: 'lavender'}}>
                { global.loading ? <Spin /> : (
         <div>
-          <Config rates={global.rates} myrates={global.myrates} setMyRates={setMyRates} />
+          <MainContaianer rates={global.rates} myrates={global.myrates} setMyRates={setMyRates} />
         </div>
       ) }
         </div>
