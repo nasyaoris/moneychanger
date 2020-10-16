@@ -24,7 +24,6 @@ test('render main container with title', () => {
 })
 
 it('calls "onClick" prop on button click', () => {
-  // Render new instance in every test to prevent leaking state
   const onClick = jest.fn();
   const { getByText } = render(<Button onClick={onClick}>Add new currency</Button>);
   fireEvent.click(getByText(/Add new currency/i));
